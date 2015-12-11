@@ -1,0 +1,27 @@
+#include <stdio.h>
+#include <string.h>
+#include <time.h>
+int main(void) {
+  struct tm tm;
+  char timebuf[64];
+
+  // Zero out struct tm
+  memset(&tm, 0, sizeof(struct tm));
+
+  // November 4, 2008 11:00 pm
+  tm.tm_sec = 0;
+  tm.tm_min = 0;
+  tm.tm_hour = 23;
+  tm.tm_mday = 4;
+  tm.tm_mon = 10;
+  tm.tm_year = 108;
+
+  // Call mktime to recompute tm.tm_wday and tm.tm_yday
+  mktime(&tm);
+
+  if (strftime(timebuf, sizeof(timebuf), "%W", &tm) != 0) {
+    printf("Week number is: %s\n", timebuf);
+  }
+
+  return 0;
+}
